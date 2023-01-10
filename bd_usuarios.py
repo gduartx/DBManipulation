@@ -11,7 +11,7 @@ def criar_tabela():
 
     sql = """
     CREATE TABLE IF NOT EXISTS Usuario(
-        id_usuario INTEGER IDENTITY,
+        id_usuario INTEGER PRIMARY KEY AUTOINCREMENT,
         username VARCHAR(50),
         nome VARCHAR(50),
         sobrenome VARCHAR(50),
@@ -20,11 +20,10 @@ def criar_tabela():
         cep CHAR(8),
         email VARCHAR(100),
 
-        Constraint PK_pessoa PRIMARY KEY (id_usuario),
         Constraint UQ_pessoa_cpf UNIQUE (cpf),
         Constraint UQ_pessoa_username UNIQUE (username),
         Constraint UQ_pessoa_email UNIQUE (email)
-        Constraint FK_pessoa_endereco FOREIGN KEY cpf REFERENCES endereco(cpf)
+        Constraint FK_pessoa_endereco FOREIGN KEY (cep) REFERENCES endereco(CEP)
     )    
     """
 
@@ -225,20 +224,23 @@ def consulta_endereco():
 ==============================================
             ATUALIZAÇÃO DE CADASTRO
 ==============================================
-Digite o id do usuario a qual o endereco será consultado: """)
-
+Digite o id do usuário qual o endereco será consultado: """)
+    
     cursor.execute("""
-        SELECT u.cep, u.id_usuario, e.cep, e.logradouro, e.Número, e.Complemento, e.bairro, e.Localidade, e.UF
-        FROM Usuario as u JOIN endereco as e
-        ON u.cep = e.CEP
-        WHERE u.id_usuario = (?)
-        """, (id,))
+        SELECT * FROM endereco 
+        WHERE id_endereco = (?)""", (id,))
 
-    print(cursor.fetchall())
-    print(cursor.fetchmany())
-    print(cursor.fetchone())
     for row in cursor.fetchall():
-        print(row, 'AOBA')
+        id_endereco, cep, Logradouro, Número, Complemento, Bairro, Localidade, uf, ibge, gia, ddd, siafi = row
+        print(f"""
+        CEP = {cep}
+        UF = {uf}
+        Localidade = {Localidade}
+        Bairro = {Bairro}
+        Logradouro = {Logradouro}
+        Número = {Número}
+        """)
+    
 
 
 

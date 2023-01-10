@@ -1,6 +1,6 @@
 import bd_usuarios
 
-#bd_usuarios.criar_tabela()
+bd_usuarios.criar_tabela()
 
 x = int(input("""
 ==============================================

@@ -7,6 +7,7 @@ cursor = conn.cursor()
 def cria_tabela():
     sql = """
     CREATE TABLE IF NOT EXISTS endereco(
+        id_endereco INTEGER PRIMARY KEY AUTOINCREMENT,
         CEP CHAR(8),
         Logradouro VARCHAR(120),
         Número VARCHAR(15),
@@ -37,7 +38,7 @@ def adiciona_cep(dic_requisicao, numero):
     gia = dic_requisicao['gia']
     ddd = dic_requisicao['ddd']
     siafi = dic_requisicao['siafi']
-
-    cursor.execute(f"INSERT INTO endereco VALUES(?,?,?,?,?,?,?,?,?,?,?)", (cep, logradouro, numero, complemento, bairro, localidade, uf, ibge, gia, ddd, siafi))
+    id = None
+    cursor.execute(f"INSERT INTO endereco VALUES(?,?,?,?,?,?,?,?,?,?,?,?)", (id, cep, logradouro, numero, complemento, bairro, localidade, uf, ibge, gia, ddd, siafi))
 
     conn.commit()
